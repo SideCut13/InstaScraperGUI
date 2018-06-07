@@ -23,6 +23,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -34,6 +35,7 @@ public class Main extends Application {
     private final static Color WHITE = Color.WHITE;
     private final static Color MY_NAVY = Color.rgb(82, 59, 156);
     private Font logoFont = Font.font("Candara", FontWeight.EXTRA_BOLD, 45);
+    private Font infoFont = Font.font("Candara", FontWeight.EXTRA_BOLD, 30);
     private Font mainFont = Font.font("Candara", FontWeight.EXTRA_BOLD, 16);
     private Font radioButtonFont = Font.font("Candara", FontWeight.EXTRA_BOLD, 15);
     /*
@@ -82,6 +84,29 @@ public class Main extends Application {
      */
     private Button infoButton;
 
+    /*
+        INFO WINDOW
+     */
+    private HBox infoLabelBox;
+    private Text infoText;
+    private HBox infoAuthorsBox;
+    private Text authorsLabel;
+    private HBox annaAuthor;
+    private Text annaText;
+    private String annaUrl;
+    private Hyperlink annaLink;
+    private HBox szymonAuthor;
+    private Text szymonText;
+    private String szymonUrl;
+    private Hyperlink szymonLink;
+    private HBox danielAuthor;
+    private Text danielText;
+    private String danielUrl;
+    private Hyperlink danielLink;
+    private VBox infoInstructionBox;
+    private Text instructionLabel;
+    private Text instructionText;
+    private GridPane infoGridPane;
     /**
      * METHOD TO START JAVAFX VIEW
      */
@@ -204,13 +229,12 @@ public class Main extends Application {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         /*
-            TE 2 LINIE POWINNY BYC SKASOWANE PO ODKOMENTOWNIU KODU PONIŻEJ
+            THIS 2 LINES SHOULD BE REMOVE AFTER UNCOMMENT CODE BELOW
          */
         CheckBox checkBox1 = new CheckBox();
         scrollPane.setContent(checkBox1);
         /*
-        KOD DO WSTAWIANIA OBRAZKÓW DO CHECKBOZÓW DO SCROLLPANE
-        NIE DAJE RĘKI UCIĄĆ ŻE ZADZIAŁA ALE NIE MAM INNEGO POMYSŁU
+        CODE FOR SET IMAGES INTO CHECKBOXES IN SCROLLPANE
 
         namesImages = new String[]{}; //TUTAJ TRZEBA PODAĆ NAZWY OBRAZKÓW W {]
         Image[] images = new Image[namesImages.length];
@@ -243,37 +267,34 @@ public class Main extends Application {
         downloadStartButton.setStyle("-fx-background-color:#523b9c; -fx-stroke: white; -fx-stroke-width: 2px");
         downloadStartButton.setFont(mainFont);
         downloadStartButton.setTextFill(WHITE);
-        downloadStartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //SPRAWDZENIE CZY TEXTFIELD OD NICKU UŻYTKOWNIKA NIE JEST PUSTY
-                if (validateInputNickTextField() == true) {
-                    if(validateInputPathDirectoryTextField() == true) {
-                        //TUTAJ CALEP OBIERANIE DANYCH
-                        if (downloadPhotosButton.isSelected()) {
-                            //RADIO BUTTON OD ZDJĘ i VIDEO
-                        }
-                        if (downloadTagsButton.isSelected()) {
-                            //RADIO BUTTON OD TAGÓW
-                        }
+        downloadStartButton.setOnAction(event -> {
+            //SPRAWDZENIE CZY TEXTFIELD OD NICKU UŻYTKOWNIKA NIE JEST PUSTY
+            if (validateInputNickTextField() == true) {
+                if(validateInputPathDirectoryTextField() == true) {
+                    //TUTAJ CALEP OBIERANIE DANYCH
+                    if (downloadPhotosButton.isSelected()) {
+                        //RADIO BUTTON OD ZDJĘ i VIDEO
                     }
-                    else{
-                        alertMessage = new Alert(Alert.AlertType.ERROR);
-                        alertMessage.setTitle("Błąd!");
-                        alertMessage.setHeaderText(null);
-                        alertMessage.setContentText("Nie wybrano folderu dla pobieranych danych!");
-                        alertMessage.showAndWait();
+                    if (downloadTagsButton.isSelected()) {
+                        //RADIO BUTTON OD TAGÓW
                     }
                 }
                 else{
                     alertMessage = new Alert(Alert.AlertType.ERROR);
                     alertMessage.setTitle("Błąd!");
                     alertMessage.setHeaderText(null);
-                    alertMessage.setContentText("Nie wybrano nicku użytkownika!");
+                    alertMessage.setContentText("Nie wybrano folderu dla pobieranych danych!");
                     alertMessage.showAndWait();
                 }
-
             }
+            else{
+                alertMessage = new Alert(Alert.AlertType.ERROR);
+                alertMessage.setTitle("Błąd!");
+                alertMessage.setHeaderText(null);
+                alertMessage.setContentText("Nie wybrano nicku użytkownika!");
+                alertMessage.showAndWait();
+            }
+
         });
         //=========================================INFO BUTTON==========================================================
         /*
@@ -283,11 +304,184 @@ public class Main extends Application {
         infoButton.setStyle("-fx-background-color:#523b9c; -fx-stroke: white; -fx-stroke-width: 2px");
         infoButton.setFont(mainFont);
         infoButton.setTextFill(WHITE);
-        infoButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //TUTAJ OTWARCIE INFO
-            }
+        infoButton.setOnAction(event -> {
+            Stop[] stops = new Stop[]{
+                    new Stop(0, Color.rgb(255, 242, 0)),
+                    new Stop(0.2, Color.rgb(255, 128, 0)),
+                    new Stop(0.4, Color.rgb(250, 74, 31)),
+                    new Stop(0.6, Color.rgb(206, 42, 93)),
+                    new Stop(0.8, Color.rgb(167, 61, 155)),
+                    new Stop(1, Color.rgb(82, 59, 156))};
+
+            LinearGradient linearGradientBackgroundSceneForInfo = new LinearGradient(0, 500, 400, 0,
+                    false,
+                    CycleMethod.NO_CYCLE,
+                    stops);
+            /*
+                INFO BOX SETTINGS
+            */
+            infoLabelBox = new HBox();
+            /*
+                INFO TEXT LABEL SETTINGS
+            */
+            infoText = new Text();
+            infoText.setTextAlignment(TextAlignment.CENTER);
+            infoText.setFont(infoFont);
+            infoText.setText("KRÓTKIE INFO :)");
+            infoText.setStroke(Color.WHITE);
+            infoText.setStrokeType(StrokeType.OUTSIDE);
+            infoText.setStrokeWidth(2);
+            infoText.setFill(MY_NAVY);
+            infoLabelBox.getChildren().addAll(infoText);
+            /*
+                INFO AUTHORS BOX SETTINGS
+            */
+            infoAuthorsBox = new HBox();
+            /*
+                INFO AUTHORS TEXT LABEL SETTINGS
+            */
+            authorsLabel = new Text();
+            authorsLabel.setText("Autorzy:\n");
+            authorsLabel.setFont(mainFont);
+            authorsLabel.setStroke(Color.WHITE);
+            authorsLabel.setStrokeType(StrokeType.OUTSIDE);
+            authorsLabel.setStrokeWidth(2);
+            authorsLabel.setFill(MY_NAVY);
+            infoAuthorsBox.getChildren().addAll(authorsLabel);
+            /*
+                INFO ANNA AUTHOR BOX SETTINGS
+            */
+            annaAuthor = new HBox();
+            /*
+                INFO ANNA AUTHOR TEXT SETTINGS
+            */
+            annaText = new Text();
+            annaText.setText("Anna Zdrojewska ");
+            annaText.setFont(mainFont);
+            annaText.setFill(WHITE);
+            /*
+                URL FOR ANNA GITHUB
+            */
+            annaUrl = "https://github.com/SideCut13";
+            /*
+                LINK ANNA GITHUB
+            */
+            annaLink = new Hyperlink();
+            annaLink.setFont(mainFont);
+            annaLink.setText(annaUrl);
+            annaLink.setOnAction(event1 -> openBrowser(annaUrl));
+            annaAuthor.getChildren().addAll(annaText, annaLink);
+            /*
+                INFO SZYMON AUTHOR BOX SETTINGS
+            */
+            szymonAuthor = new HBox();
+            /*
+                INFO SZYMON AUTHOR TEXT SETTINGS
+            */
+            szymonText = new Text();
+            szymonText.setText("Szymon Królikowski ");
+            szymonText.setFont(mainFont);
+            szymonText.setFill(WHITE);
+            /*
+                URL FOR SZYMON GITHUB
+            */
+            szymonUrl = "https://github.com/Krolik23";
+             /*
+                LINK SZYMON GITHUB
+            */
+            szymonLink = new Hyperlink();
+            szymonLink.setFont(mainFont);
+            szymonLink.setText(szymonUrl);
+            szymonLink.setOnAction(event12 -> openBrowser(szymonUrl));
+            szymonAuthor.getChildren().addAll(szymonText, szymonLink);
+            /*
+                INFO DANIEL AUTHOR BOX SETTINGS
+            */
+            danielAuthor = new HBox();
+            /*
+                INFO DANIEL AUTHOR TEXT SETTINGS
+            */
+            danielText = new Text();
+            danielText.setText("Daniel Pawlikowski ");
+            danielText.setFont(mainFont);
+            danielText.setFill(WHITE);
+            /*
+                URL FOR DANIEL GITHUB
+            */
+            danielUrl = "https://github.com/pawlikx";
+             /*
+                LINK SZYMON GITHUB
+            */
+            danielLink = new Hyperlink();
+            danielLink.setFont(mainFont);
+            danielLink.setText(danielUrl);
+            danielLink.setOnAction(event13 -> openBrowser(danielUrl));
+            danielAuthor.getChildren().addAll(danielText, danielLink);
+            /*
+                INSTRUCTION OF USING APP BOX SETTING
+             */
+            infoInstructionBox = new VBox();
+            infoInstructionBox.setSpacing(20);
+            instructionLabel = new Text();
+            instructionLabel.setText("Instrukcja obsługi:");
+            instructionLabel.setFont(mainFont);
+            instructionLabel.setStroke(Color.WHITE);
+            instructionLabel.setStrokeType(StrokeType.OUTSIDE);
+            instructionLabel.setStrokeWidth(2);
+            instructionLabel.setFill(MY_NAVY);
+            /*
+                INSTRUCTION OF USING APP TEXT SETTING
+             */
+            instructionText = new Text();
+            instructionText.setText("1. Wprowadź nick użytkownika Instagram.\n"+
+            "2. Zaznacz co chcesz ściągnąć.\n"+
+            "3. Wybierz folder do zapisu danych.\n"+
+            "4. Wciśnij przycisk rozpocznij pobieranie.\n"+
+            "5. Ciesz się zdjęciami! :)");
+            instructionText.setFont(mainFont);
+            instructionText.setFill(WHITE);
+            infoInstructionBox.getChildren().addAll(instructionLabel, instructionText);
+            /*
+                SETTING FOR GRID PANE IN INFO WINDOW
+             */
+            infoGridPane = new GridPane();
+            infoGridPane.setHgap(10);
+            infoGridPane.setVgap(10);
+            infoGridPane.setAlignment(Pos.CENTER);
+            infoGridPane.setPadding(new Insets(25, 10, 25, 10));
+            GridPane.setHalignment(infoLabelBox, HPos.CENTER);
+            GridPane.setValignment(infoLabelBox, VPos.CENTER);
+            GridPane.setHalignment(infoAuthorsBox, HPos.LEFT);
+            GridPane.setValignment(infoAuthorsBox, VPos.CENTER);
+            GridPane.setHalignment(annaAuthor, HPos.LEFT);
+            GridPane.setValignment(annaAuthor, VPos.CENTER);
+            GridPane.setHalignment(szymonAuthor, HPos.LEFT);
+            GridPane.setValignment(szymonAuthor, VPos.CENTER);
+            GridPane.setHalignment(danielAuthor, HPos.LEFT);
+            GridPane.setValignment(danielAuthor, VPos.CENTER);
+            GridPane.setHalignment(infoInstructionBox, HPos.LEFT);
+            GridPane.setValignment(infoInstructionBox, VPos.CENTER);
+            infoGridPane.setBackground(Background.EMPTY);
+            infoGridPane.add(infoLabelBox, 0,0,2, 1);
+            infoGridPane.add(infoAuthorsBox, 0, 1, 1, 1);
+            infoGridPane.add(annaAuthor, 0,2,1, 1);
+            infoGridPane.add(szymonAuthor, 0, 3, 1, 1);
+            infoGridPane.add(danielAuthor, 0, 4, 1, 1);
+            infoGridPane.add(infoInstructionBox, 0, 5, 1, 1);
+            /*
+                NEW SCENE FOR INFO WINDOW
+             */
+            Scene infoScene = new Scene(infoGridPane, 400, 500);
+            infoScene.setFill(linearGradientBackgroundSceneForInfo);
+            /*
+                NEW STAGE FOR INFO WINDOW
+             */
+            Stage infoStage = new Stage();
+            infoStage.setTitle("InstaScraper INFO");
+            infoStage.setScene(infoScene);
+            infoStage.setX(primaryStage.getX() + 250);
+            infoStage.setY(primaryStage.getY() + 50);
+            infoStage.show();
         });
 
 
@@ -362,6 +556,9 @@ public class Main extends Application {
         return entry;
     }
 
+    private void openBrowser(final String url) {
+        getHostServices().showDocument(url);
+    }
     public static void main(String[] args) {
         launch(args);
     }
