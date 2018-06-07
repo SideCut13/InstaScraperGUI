@@ -1,8 +1,10 @@
 # InstaScraperGUI
-![instascraper main](https://user-images.githubusercontent.com/15147818/41120310-740fc612-6a95-11e8-8d73-c4bbc6ec69a8.PNG)
+![instascraper main](https://user-images.githubusercontent.com/15147818/41120998-83a5b472-6a97-11e8-824a-76a486d78dac.PNG)
 ![instascraper info](https://user-images.githubusercontent.com/15147818/41120332-8330b8a4-6a95-11e8-8490-69d68544cd08.PNG)
+![alerts](https://user-images.githubusercontent.com/15147818/41121163-e32af6be-6a97-11e8-821f-9694ef08ec31.png)
 
-## Overwiev
+
+## Overview
 GUI implementation for InstaScraper project (see: [InstaScraper](https://github.com/pawlikx/webScraping)).
 
 ## Description
