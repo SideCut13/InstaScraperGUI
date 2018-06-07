@@ -564,6 +564,10 @@ public class Main extends Application {
         return entry;
     }
 
+    /**
+     * METHOD FOR OPEN BROWSER AFTER CLICKED HYPERLINK
+     * @param url TO AUTHORS GITHUBS
+     */
     private void openBrowser(final String url) {
         getHostServices().showDocument(url);
     }
