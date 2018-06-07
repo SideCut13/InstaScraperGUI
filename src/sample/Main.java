@@ -171,7 +171,7 @@ public class Main extends Application {
         /*
             SETTINGS FOR RADIO BUTTON TO DOWNLOAD PHOTO/VIDEO
          */
-        downloadPhotosButton = new RadioButton("Zdjęcia/Video");
+        downloadPhotosButton = new RadioButton("Zdjęcia/Filmy");
         downloadPhotosButton.setFont(radioButtonFont);
         downloadPhotosButton.setToggleGroup(groupRadioButtons);
         downloadPhotosButton.setSelected(true);
@@ -179,7 +179,7 @@ public class Main extends Application {
         /*
             SETTINGS FOR RADIO BUTTON TO DOWNLOAD PHOTO/VIDEO AND TAGS
          */
-        downloadTagsButton = new RadioButton("Zdjęcia/Video + Tagi");
+        downloadTagsButton = new RadioButton("Zdjęcia/Filmy + Tagi");
         downloadTagsButton.setFont(radioButtonFont);
         downloadTagsButton.setToggleGroup(groupRadioButtons);
         downloadTagsButton.setTextFill(WHITE);
