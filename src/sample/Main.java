@@ -60,6 +60,7 @@ public class Main extends Application {
     private TextField nickTextField;
     private Label nickLabel;
     private Label downloadLabel;
+    private ToggleGroup groupRadioButtons;
     private RadioButton downloadPhotosButton;
     private RadioButton downloadTagsButton;
     private Label writeDataLabel;
@@ -164,16 +165,23 @@ public class Main extends Application {
         downloadLabel.setFont(mainFont);
         downloadLabel.setTextFill(WHITE);
         /*
+            GROUP FOR RADIO BUTTONS
+         */
+        groupRadioButtons = new ToggleGroup();
+        /*
             SETTINGS FOR RADIO BUTTON TO DOWNLOAD PHOTO/VIDEO
          */
         downloadPhotosButton = new RadioButton("Zdjęcia/Video");
         downloadPhotosButton.setFont(radioButtonFont);
+        downloadPhotosButton.setToggleGroup(groupRadioButtons);
+        downloadPhotosButton.setSelected(true);
         downloadPhotosButton.setTextFill(WHITE);
-                /*
+        /*
             SETTINGS FOR RADIO BUTTON TO DOWNLOAD PHOTO/VIDEO AND TAGS
          */
         downloadTagsButton = new RadioButton("Zdjęcia/Video + Tagi");
         downloadTagsButton.setFont(radioButtonFont);
+        downloadTagsButton.setToggleGroup(groupRadioButtons);
         downloadTagsButton.setTextFill(WHITE);
 
         /*
